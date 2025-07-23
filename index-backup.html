@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玄机堂 - 算命看相风水大师</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 头部样式 */
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(to right, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 30px;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* 主视觉区域 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%23ffd700" opacity="0.3"/><circle cx="50" cy="50" r="1" fill="%23ff8c00" opacity="0.5"/><circle cx="80" cy="30" r="1.5" fill="%23ffd700" opacity="0.4"/></svg>');
+            animation: stars 50s linear infinite;
+        }
+
+        @keyframes stars {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            background: linear-gradient(to right, #ffd700, #ff8c00, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffd700, 0 0 40px #ffd700; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff8c00, 0 0 40px #ff8c00, 0 0 50px #ff8c00; }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            color: #000;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        /* 服务区域 */
+        .services {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, #ffd700, #ff8c00);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* 大师介绍 */
+        .masters {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #2c3e50, #1a2a6c);
+        }
+
+        .masters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .master-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .master-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .master-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #8e2de2, #4a00e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .master-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .master-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        /* 预约区域 */
+        .booking {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        .booking-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .submit-button {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        /* 联系方式 */
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .contact-item {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        /* 页脚 */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+
+            .nav-menu {
+                margin-top: 20px;
+            }
+
+            .nav-menu li {
+                margin: 0 10px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">玄机堂</div>
+                <ul class="nav-menu">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#services">服务项目</a></li>
+                    <li><a href="#masters">大师介绍</a></li>
+                    <li><a href="#booking">在线预约</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主视觉区域 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>玄机堂</h1>
+            <p>千年传承，洞察天机，为您指点迷津</p>
+            <a href="#booking" class="cta-button">立即预约</a>
+        </div>
+    </section>
+
+    <!-- 服务项目 -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">服务项目</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🔮</div>
+                    <h3>算命预测</h3>
+                    <p>通过生辰八字、紫微斗数等传统方法，为您预测人生运势，指点迷津。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👁️</div>
+                    <h3>看相面诊</h3>
+                    <p>观面相、手相，解读人生密码，预测未来趋势，提供人生指导。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h3>风水布局</h3>
+                    <p>勘察住宅、商铺风水，调整气场布局，助您招财进宝，事业兴旺。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💍</div>
+                    <h3>合婚配对</h3>
+                    <p>分析双方八字，测算婚姻匹配度，为您的幸福婚姻保驾护航。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👶</div>
+                    <h3>起名择日</h3>
+                    <p>根据五行八字为新生儿起名，选择吉日良辰，助孩子一生顺遂。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>事业指导</h3>
+                    <p>分析事业运势，提供职业规划建议，助您在职场中脱颖而出。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 大师介绍 -->
+    <section class="masters" id="masters">
+        <div class="container">
+            <h2 class="section-title">大师介绍</h2>
+            <div class="masters-grid">
+                <div class="master-card">
+                    <div class="master-image">👨‍🦳</div>
+                    <div class="master-info">
+                        <h3>玄机子</h3>
+                        <p>首席命理大师，精通八字、紫微斗数，从业三十余年。</p>
+                    </div>
+                </div>
+                <div class="master-card">
+                    <div class="master-image">👩‍🦳</div>
+                    <div class="master-info">
+                        <h3>慧明师太</h3>
+                        <p>面相手相专家，祖传相术，断事如神，深受信众敬仰。</p>
+                    </div>
+                </div>
+                <div class="master-card">
+                    <div class="master-image">👨‍💼</div>
+                    <div class="master-info">
+                        <h3>青云道长</h3>
+                        <p>风水堪舆专家，擅长阳宅阴宅布局，助人改运旺财。</p>
+                    </div>
+                </div>
+                <div class="master-card">
+                    <div class="master-image">👩‍🎓</div>
+                    <div class="master-info">
+                        <h3>灵慧居士</h3>
+                        <p>姓名学专家，起名择日高手，为无数新生儿赐予佳名。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 在线预约 -->
+    <section class="booking" id="booking">
+        <div class="container">
+            <h2 class="section-title">在线预约</h2>
+            <div class="booking-form">
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label for="phone">联系电话</label>
+                    <input type="tel" id="phone" placeholder="请输入您的手机号">
+                </div>
+                <div class="form-group">
+                    <label for="service">预约服务</label>
+                    <select id="service">
+                        <option value="">请选择服务项目</option>
+                        <option value="算命预测">算命预测</option>
+                        <option value="看相面诊">看相面诊</option>
+                        <option value="风水布局">风水布局</option>
+                        <option value="合婚配对">合婚配对</option>
+                        <option value="起名择日">起名择日</option>
+                        <option value="事业指导">事业指导</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">预约时间</label>
+                    <input type="date" id="date">
+                </div>
+                <div class="form-group">
+                    <label for="message">备注信息</label>
+                    <textarea id="message" rows="4" placeholder="请简要说明您的需求"></textarea>
+                </div>
+                <button class="submit-button">提交预约</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">联系我们</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <h3>地址</h3>
+                    <p>北京市朝阳区玄机堂大厦101号</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <h3>电话</h3>
+                    <p>400-888-8888</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🕒</div>
+                    <h3>营业时间</h3>
+                    <p>每日 9:00 - 21:00</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🌐</div>
+                    <h3>微信</h3>
+                    <p>扫描二维码关注我们</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 玄机堂 版权所有 | 传承千年易学文化</p>
+                <p>本网站仅供娱乐参考，请勿迷信</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 表单提交
+        document.querySelector('.submit-button').addEventListener('click', function() {
+            alert('预约信息已提交，我们会尽快与您联系！');
+            document.querySelectorAll('input, select, textarea').forEach(input => {
+                input.value = '';
+            });
+        });
+
+        // 动态背景效果
+        document.addEventListener('mousemove', (e) => {
+            const hero = document.querySelector('.hero');
+            const x = (window.innerWidth - e.pageX) / 50;
+            const y = (window.innerHeight - e.pageY) / 50;
+            hero.style.backgroundPosition = `${x}px ${y}px`;
+        });
+    </script>
+</body>
+</html>
